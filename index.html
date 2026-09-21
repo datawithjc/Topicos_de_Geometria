@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometría Saber TyT — Perímetros, Áreas y Figuras Irregulares</title>
+<style>
+:root{
+  --navy:#123b66; --blue:#1769aa; --cyan:#2b9fd8; --orange:#ef7d32;
+  --green:#20845a; --red:#c94c4c; --bg:#f4f7fb; --card:#fff;
+  --text:#233143; --muted:#65748b; --border:#dce5ef; --shadow:0 8px 24px rgba(25,55,90,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+header{background:linear-gradient(135deg,var(--navy),#1e6fa8);color:#fff;padding:42px 20px 34px}
+.wrap{max-width:1120px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(28px,5vw,44px);line-height:1.1}
+header p{max-width:850px;margin:10px 0 0;font-size:17px;opacity:.93}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.badge{padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);font-size:13px}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+nav .wrap{display:flex;gap:7px;overflow:auto;padding:9px 10px}
+nav button{white-space:nowrap;border:0;background:#eef4fa;color:var(--navy);padding:9px 12px;border-radius:9px;cursor:pointer;font-weight:700}
+nav button:hover{background:#dcecf8}
+main{padding:28px 16px 60px}
+section{margin:0 0 30px;scroll-margin-top:72px}
+h2{color:var(--navy);font-size:28px;margin:0 0 12px}
+h3{color:var(--navy);margin-top:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+.formula{background:#eef7fd;border-left:5px solid var(--cyan);padding:14px 16px;border-radius:10px;font-size:18px}
+.tip{background:#fff8e9;border-left:5px solid #e6a62b;padding:14px 16px;border-radius:10px}
+.warning{background:#fff0f0;border-left:5px solid var(--red);padding:14px 16px;border-radius:10px}
+.success{background:#eef9f3;border-left:5px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{border:1px solid var(--border);padding:10px;text-align:left;vertical-align:top}
+th{background:#edf4fa;color:var(--navy)}
+.diagram{display:flex;justify-content:center;align-items:center;min-height:150px;background:#fbfdff;border:1px dashed #c8d8e7;border-radius:12px;margin:12px 0;padding:10px}
+svg{max-width:100%;height:auto}
+.step{display:flex;gap:12px;margin:10px 0}
+.num{min-width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800}
+.question{border-top:5px solid var(--orange)}
+.option{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border:1px solid var(--border);background:#fff;border-radius:10px;cursor:pointer;font-size:15px}
+.option:hover{border-color:var(--cyan);background:#f6fbff}
+.option.correct{background:#eaf8f0;border-color:#55a878}
+.option.wrong{background:#fff0f0;border-color:#d96b6b}
+.feedback{display:none;margin-top:12px;padding:13px;border-radius:10px}
+.feedback.show{display:block}
+.small{color:var(--muted);font-size:14px}
+.progress{height:10px;background:#e5edf5;border-radius:99px;overflow:hidden;margin:10px 0 18px}
+.progress>div{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0%;transition:.3s}
+.score{font-size:22px;font-weight:800;color:var(--navy)}
+footer{background:#123b66;color:#fff;padding:28px 16px}
+.kpi{font-size:30px;font-weight:900;color:var(--blue)}
+.reveal{border:0;background:var(--navy);color:#fff;padding:10px 14px;border-radius:8px;cursor:pointer}
+.answer{display:none;margin-top:12px}
+.answer.show{display:block}
+ul{padding-left:22px}
+hr{border:0;border-top:1px solid var(--border);margin:25px 0}
+@media print{nav,.no-print{display:none!important}.card{box-shadow:none;break-inside:avoid}header{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+  <div class="badge">Tópicos de Geometría - SABER TyT</div>
+  <h1>Geometría: perímetros, áreas y figuras irregulares</h1>
+  <p>Ruta de aprendizaje para interpretar situaciones, seleccionar la medida adecuada, descomponer figuras y resolver problemas geométricos paso a paso.</p>
+  <div class="badges">
+    <span class="badge">Triángulos</span><span class="badge">Círculos</span><span class="badge">Paralelogramos</span>
+    <span class="badge">Figuras irregulares</span><span class="badge">Paralelismo y ortogonalidad</span>
+    <span class="badge">Desigualdad triangular</span><span class="badge">Coordenadas cartesianas</span>
+  </div>
+</div>
+</header>
+
+<nav><div class="wrap">
+<button onclick="go('ruta')">Ruta</button><button onclick="go('conceptos')">Conceptos</button>
+<button onclick="go('formulas')">Fórmulas</button><button onclick="go('irregulares')">Irregulares</button>
+<button onclick="go('ejemplos')">Ejemplos</button><button onclick="go('practica')">Práctica</button>
+<button onclick="go('simulador')">Simulador</button><button onclick="go('estrategias')">Estrategias</button>
+</div></nav>
+
+<main class="wrap">
+
+<section id="ruta">
+<h2>1. ¿Cómo estudiar esta temática?</h2>
+<div class="card">
+<div class="grid">
+<div><div class="kpi">01</div><h3>Identifica</h3><p>¿Te piden longitud alrededor de una figura? Es <b>perímetro</b>. ¿Te piden superficie cubierta? Es <b>área</b>.</p></div>
+<div><div class="kpi">02</div><h3>Organiza</h3><p>Extrae datos, unidades y medidas. Haz un dibujo aunque el problema no lo presente.</p></div>
+<div><div class="kpi">03</div><h3>Modela</h3><p>Elige la fórmula o divide una figura compleja en figuras conocidas.</p></div>
+<div><div class="kpi">04</div><h3>Comprueba</h3><p>Revisa unidades, magnitud y si tu resultado responde exactamente lo preguntado.</p></div>
+</div>
+</div>
+<div class="tip"><b>Idea clave:</b> en preguntas de selección múltiple, no basta con calcular. Primero hay que determinar <b>qué magnitud</b> se solicita.</div>
+</section>
+
+<section id="conceptos">
+<h2>2. Conceptos fundamentales</h2>
+<div class="grid">
+<div class="card"><h3>Perímetro</h3><p>Es la longitud total del borde de una figura plana.</p><div class="formula">P = suma de todas las longitudes del contorno</div><p class="small">Unidades: cm, m, km…</p></div>
+<div class="card"><h3>Área</h3><p>Es la medida de la superficie interior de una figura plana.</p><div class="formula">A se expresa en unidades cuadradas: cm², m², km²…</div><p class="small">No confundas m con m².</p></div>
+<div class="card"><h3>Longitud</h3><p>Describe una dimensión lineal: lado, radio, diámetro, altura, distancia entre puntos.</p><div class="formula">1 m = 100 cm &nbsp; | &nbsp; 1 km = 1000 m</div></div>
+<div class="card"><h3>Figura regular e irregular</h3><p>Una figura regular tiene una estructura que permite aplicar directamente fórmulas conocidas. Una irregular puede requerir <b>descomposición</b> o suma/resta de áreas.</p></div>
+</div>
+<div class="card">
+<h3>Perímetro ≠ área</h3>
+<table><tr><th>Si el problema dice…</th><th>Piensa en…</th></tr>
+<tr><td>“rodear”, “cercar”, “bordear”, “poner una cinta alrededor”</td><td><b>Perímetro</b></td></tr>
+<tr><td>“cubrir”, “pintar la superficie”, “sembrar”, “pavimentar”, “superficie”</td><td><b>Área</b></td></tr>
+</table>
+</div>
+</section>
+
+<section id="formulas">
+<h2>3. Fórmulas que debes dominar</h2>
+<div class="card">
+<table>
+<tr><th>Figura</th><th>Perímetro</th><th>Área</th><th>Dato clave</th></tr>
+<tr><td>Cuadrado</td><td>P = 4l</td><td>A = l²</td><td>Todos los lados iguales.</td></tr>
+<tr><td>Rectángulo</td><td>P = 2(b+h)</td><td>A = b·h</td><td>Lados opuestos iguales.</td></tr>
+<tr><td>Triángulo</td><td>P = a+b+c</td><td>A = (b·h)/2</td><td>La altura debe ser perpendicular a la base.</td></tr>
+<tr><td>Paralelogramo</td><td>P = 2(a+b)</td><td>A = b·h</td><td>La altura no es necesariamente el lado inclinado.</td></tr>
+<tr><td>Rombo</td><td>P = 4l</td><td>A = (D·d)/2</td><td>D y d son diagonales.</td></tr>
+<tr><td>Trapecio</td><td>P = suma de lados</td><td>A = ((B+b)·h)/2</td><td>B y b son las bases paralelas.</td></tr>
+<tr><td>Círculo</td><td>C = 2πr = πd</td><td>A = πr²</td><td>d = 2r.</td></tr>
+</table>
+</div>
+
+<div class="grid">
+<div class="card">
+<h3>Triángulos</h3>
+<p>La suma de los ángulos interiores es:</p>
+<div class="formula">α + β + γ = 180°</div>
+<p><b>Desigualdad triangular:</b> para que tres segmentos formen un triángulo, la suma de dos lados debe ser mayor que el tercero.</p>
+<div class="formula">a+b&gt;c, &nbsp; a+c&gt;b, &nbsp; b+c&gt;a</div>
+</div>
+<div class="card">
+<h3>Círculo</h3>
+<div class="formula">A = πr²<br>C = 2πr</div>
+<p>Si te dan el diámetro, primero puedes obtener el radio:</p>
+<div class="formula">r = d/2</div>
+</div>
+<div class="card">
+<h3>Paralelismo y ortogonalidad</h3>
+<p><b>Paralelas:</b> rectas que mantienen la misma dirección y no se cortan en un plano.</p>
+<p><b>Perpendiculares:</b> se intersectan formando un ángulo de 90°.</p>
+</div>
+<div class="card">
+<h3>Coordenadas cartesianas</h3>
+<p>Un punto se representa como <b>(x,y)</b>. El primer valor indica posición horizontal y el segundo vertical.</p>
+<div class="formula">Distancia horizontal = |x₂−x₁|<br>Distancia vertical = |y₂−y₁|</div>
+</div>
+</div>
+</section>
+
+<section id="irregulares">
+<h2>4. Figuras irregulares y figuras compuestas</h2>
+<div class="card">
+<h3>Estrategia A: dividir y sumar</h3>
+<div class="step"><span class="num">1</span><div>Traza líneas auxiliares para convertir la figura en rectángulos, cuadrados, triángulos o semicírculos.</div></div>
+<div class="step"><span class="num">2</span><div>Calcula el área de cada parte.</div></div>
+<div class="step"><span class="num">3</span><div>Suma las áreas cuando las partes están dentro de la región.</div></div>
+<div class="formula">A<sub>total</sub> = A₁ + A₂ + A₃ + …</div>
+</div>
+<div class="card">
+<h3>Estrategia B: figura grande − parte faltante</h3>
+<div class="step"><span class="num">1</span><div>Imagina un rectángulo o cuadrado que contenga toda la figura.</div></div>
+<div class="step"><span class="num">2</span><div>Calcula el área de la figura grande.</div></div>
+<div class="step"><span class="num">3</span><div>Calcula el área que sobra.</div></div>
+<div class="formula">A<sub>figura</sub> = A<sub>grande</sub> − A<sub>faltante</sub></div>
+</div>
+<div class="warning"><b>Atención con el perímetro:</b> cuando calculas una figura irregular, no sumes automáticamente todos los segmentos que aparecen en una descomposición. Para el perímetro cuenta únicamente el <b>contorno exterior</b>, salvo que el problema indique que también se mide una línea interior.</div>
+</section>
+
+<section id="ejemplos">
+<h2>5. Ejemplos tipo Saber TyT — resueltos</h2>
+
+<div class="card question">
+<h3>Ejemplo 1 · Perímetro de un espacio rectangular</h3>
+<p>Una institución necesita instalar una cinta alrededor de un espacio rectangular de 12 m de largo y 7 m de ancho. ¿Cuántos metros de cinta necesita?</p>
+<div class="formula">P = 2(12 + 7) = 38 m</div>
+<p><b>Respuesta: B) 38 m</b></p>
+<p>A) 19 m &nbsp;&nbsp; B) 38 m &nbsp;&nbsp; C) 84 m &nbsp;&nbsp; D) 96 m</p>
+</div>
+
+<div class="card question">
+<h3>Ejemplo 2 · Área de un triángulo</h3>
+<p>Una señal triangular tiene una base de 18 cm y una altura perpendicular de 10 cm. ¿Cuál es su área?</p>
+<div class="formula">A = (18×10)/2 = 90 cm²</div>
+<p><b>Respuesta: C) 90 cm²</b></p>
+<p>A) 28 cm² &nbsp;&nbsp; B) 90 cm &nbsp;&nbsp; C) 90 cm² &nbsp;&nbsp; D) 180 cm²</p>
+</div>
+
+<div class="card question">
+<h3>Ejemplo 3 · Área de una figura en forma de L</h3>
+<p>Una zona de trabajo tiene forma de L. Puede verse como un rectángulo de 10 m × 8 m al que se le retiró un rectángulo de 4 m × 3 m. ¿Qué área queda disponible?</p>
+<div class="formula">A = (10×8) − (4×3) = 80−12 = 68 m²</div>
+<p><b>Respuesta: A) 68 m²</b></p>
+<p>A) 68 m² &nbsp;&nbsp; B) 92 m² &nbsp;&nbsp; C) 56 m² &nbsp;&nbsp; D) 120 m²</p>
+</div>
+
+<div class="card question">
+<h3>Ejemplo 4 · Círculo</h3>
+<p>Una zona circular tiene radio de 5 m. Usando π ≈ 3,14, ¿cuál es aproximadamente su área?</p>
+<div class="formula">A = πr² = 3,14(5²) = 78,5 m²</div>
+<p><b>Respuesta: D) 78,5 m²</b></p>
+<p>A) 15,7 m² &nbsp;&nbsp; B) 31,4 m² &nbsp;&nbsp; C) 62,8 m² &nbsp;&nbsp; D) 78,5 m²</p>
+</div>
+
+<div class="card question">
+<h3>Ejemplo 5 · Trapecio</h3>
+<p>Un terreno tiene forma de trapecio. Sus bases miden 20 m y 12 m, y su altura es 8 m. ¿Cuál es el área?</p>
+<div class="formula">A = ((20+12)×8)/2 = 128 m²</div>
+<p><b>Respuesta: B) 128 m²</b></p>
+<p>A) 64 m² &nbsp;&nbsp; B) 128 m² &nbsp;&nbsp; C) 160 m² &nbsp;&nbsp; D) 256 m²</p>
+</div>
+
+<div class="card question">
+<h3>Ejemplo 6 · Desigualdad triangular</h3>
+<p>Se dispone de segmentos de 4 cm, 7 cm y 12 cm. ¿Es posible construir un triángulo con ellos?</p>
+<div class="formula">4+7 = 11 &lt; 12</div>
+<p>No. La suma de los dos lados menores debe ser mayor que el tercero.</p>
+<p><b>Respuesta: C) No, porque 4+7 no es mayor que 12.</b></p>
+<p>A) Sí, porque todos son positivos &nbsp; B) Sí, porque 4+12&gt;7 &nbsp; C) No, porque 4+7&lt;12 &nbsp; D) No, porque 7+12&gt;4</p>
+</div>
+</section>
+
+<section id="practica">
+<h2>6. Práctica interactiva</h2>
+<p class="small">Selecciona una opción. La aplicación mostrará retroalimentación inmediata.</p>
+<div id="practice"></div>
+</section>
+
+<section id="simulador">
+<h2>7. Mini-simulador</h2>
+<div class="card">
+<p><b>Instrucciones:</b> responde las preguntas sin mirar las respuestas. Al finalizar, pulsa “Calificar”.</p>
+<div class="progress"><div id="bar"></div></div>
+<div id="sim"></div>
+<button class="reveal" onclick="grade()">Calificar simulador</button>
+<div id="result" class="success" style="display:none;margin-top:16px"></div>
+</div>
+</section>
+
+<section id="estrategias">
+<h2>8. Estrategias para resolver preguntas</h2>
+<div class="grid">
+<div class="card"><h3>1. Lee la última pregunta primero</h3><p>Identifica qué te están pidiendo: área, perímetro, longitud, medida de un lado, distancia o relación geométrica.</p></div>
+<div class="card"><h3>2. Escribe las unidades</h3><p>Si multiplicas longitudes, obtienes unidades cuadradas. Si sumas longitudes para un perímetro, mantienes unidades lineales.</p></div>
+<div class="card"><h3>3. Dibuja</h3><p>En figuras irregulares, una línea auxiliar puede revelar rectángulos, triángulos o círculos conocidos.</p></div>
+<div class="card"><h3>4. Usa los distractores</h3><p>Una opción puede corresponder a un error típico: usar perímetro cuando se pide área, olvidar dividir por 2 o usar diámetro como radio.</p></div>
+<div class="card"><h3>5. Comprueba la respuesta</h3><p>Pregúntate: ¿la unidad es correcta?, ¿la magnitud tiene sentido?, ¿respondí lo que realmente preguntaron?</p></div>
+<div class="card"><h3>6. En figuras compuestas</h3><p>Para área: divide y suma, o completa y resta. Para perímetro: recorre el contorno exterior.</p></div>
+</div>
+<div class="tip"><b>Regla de oro:</b> no memorices únicamente fórmulas. Aprende a reconocer <b>qué representa cada medida</b> y qué operación necesita la situación.</div>
+</section>
+
+</main>
+<footer>
+<div class="wrap">
+<b>Geometría · Preparación Saber TyT</b>
+<p>Material didáctico para aprendizaje autónomo. Las preguntas son ejercicios de práctica elaborados para esta aplicación y no corresponden a preguntas oficiales del ICFES.</p>
+</div>
+</footer>
+
+<script>
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+
+const practiceData=[
+{q:"Un cuadrado tiene lado de 9 cm. ¿Cuál es su área?",o:["18 cm²","36 cm²","81 cm²","90 cm²"],a:2,e:"A=l²=9²=81 cm². El perímetro sería 36 cm, pero aquí se pide área."},
+{q:"Un rectángulo mide 15 m de largo y 6 m de ancho. ¿Cuál es su perímetro?",o:["21 m","42 m","90 m²","180 m"],a:1,e:"P=2(15+6)=42 m. El 90 corresponde al área, no al perímetro."},
+{q:"Un paralelogramo tiene base 14 cm y altura perpendicular 5 cm. ¿Cuál es su área?",o:["19 cm²","28 cm²","70 cm²","140 cm²"],a:2,e:"A=b·h=14·5=70 cm². La altura debe ser perpendicular a la base."},
+{q:"Un círculo tiene diámetro 10 cm. Con π≈3,14, ¿cuál es su área aproximada?",o:["31,4 cm²","78,5 cm²","157 cm²","314 cm²"],a:1,e:"El radio es 5 cm. A=3,14·25=78,5 cm²."},
+{q:"Una figura irregular se obtiene de un rectángulo de 12×9 m al que se le quita un rectángulo de 3×4 m. ¿Qué área queda?",o:["84 m²","96 m²","108 m²","120 m²"],a:0,e:"12·9−3·4=108−12=96. Por tanto la respuesta correcta es B, 96 m²."},
+{q:"¿Cuál de los siguientes conjuntos de longitudes puede formar un triángulo?",o:["2, 3 y 6","4, 5 y 10","5, 7 y 11","1, 2 y 3"],a:2,e:"5+7=12>11; las tres desigualdades se cumplen. Los demás conjuntos no cumplen la desigualdad triangular."},
+{q:"Una pista rectangular mide 20 m×8 m. Se quiere colocar una barrera solo alrededor del borde. ¿Qué cantidad se necesita?",o:["28 m","40 m","56 m","160 m"],a:2,e:"Es perímetro: 2(20+8)=56 m."},
+{q:"Un trapecio tiene bases 16 cm y 10 cm y altura 6 cm. ¿Cuál es su área?",o:["36 cm²","52 cm²","78 cm²","96 cm²"],a:2,e:"A=((16+10)·6)/2=78 cm²."}
+];
+
+function renderPractice(){
+const box=document.getElementById("practice");
+practiceData.forEach((x,i)=>{
+let d=document.createElement("div"); d.className="card question";
+d.innerHTML=`<h3>Práctica ${i+1}</h3><p>${x.q}</p>`;
+x.o.forEach((op,j)=>{
+let b=document.createElement("button"); b.className="option"; b.textContent=String.fromCharCode(65+j)+") "+op;
+b.onclick=()=>answerPractice(d,j,x);
+d.appendChild(b);
+});
+let f=document.createElement("div"); f.className="feedback"; d.appendChild(f); box.appendChild(d);
+});
+}
+function answerPractice(card,j,x){
+let opts=card.querySelectorAll(".option");
+opts.forEach(b=>{b.disabled=true});
+opts[x.a].classList.add("correct");
+let f=card.querySelector(".feedback");
+if(j===x.a){f.className="feedback show success";f.innerHTML="<b>Correcto.</b> "+x.e}
+else{opts[j].classList.add("wrong");f.className="feedback show warning";f.innerHTML="<b>Revisa.</b> "+x.e}
+}
+
+const simData=[
+{q:"Un patio rectangular de 18 m por 11 m será cercado. ¿Cuántos metros de cerca se requieren?",o:["29 m","58 m","198 m","396 m"],a:1},
+{q:"Una lona triangular tiene base 12 m y altura 7 m. ¿Qué área cubre?",o:["19 m²","42 m²","84 m²","168 m²"],a:1},
+{q:"Un cuadrado tiene perímetro de 48 cm. ¿Cuál es su área?",o:["12 cm²","24 cm²","144 cm²","192 cm²"],a:2},
+{q:"Un círculo tiene radio 4 m. Con π≈3,14, ¿qué área tiene?",o:["12,56 m²","25,12 m²","50,24 m²","100,48 m²"],a:2},
+{q:"Una región se forma con un rectángulo de 14×10 m y un cuadrado de 4×4 m adosado sin superposición. ¿Área total?",o:["156 m²","140 m²","96 m²","196 m²"],a:0},
+{q:"¿Qué condición es necesaria para que tres segmentos a,b,c formen un triángulo?",o:["a+b<c siempre","a+b>c y las otras desigualdades análogas","a=b=c","a+b=c"],a:1},
+{q:"En un plano, A=(2,3) y B=(9,3). ¿Qué distancia horizontal hay entre los puntos?",o:["5","6","7","12"],a:2},
+{q:"Dos rectas se cortan formando un ángulo de 90°. ¿Cómo se describen?",o:["Paralelas","Secantes no perpendiculares","Perpendiculares","Coincidentes"],a:2},
+{q:"Un paralelogramo tiene base 20 cm y altura 4 cm. ¿Área?",o:["24 cm²","40 cm²","80 cm²","160 cm²"],a:2},
+{q:"Una figura en forma de L se calcula como rectángulo grande menos rectángulo retirado. ¿Qué operación representa el área?",o:["A=Agrande+Afaltante","A=Agrande−Afaltante","A=Pgrande−Pfaltante","A=2Agrande"],a:1}
+];
+
+function renderSim(){
+const box=document.getElementById("sim");
+simData.forEach((x,i)=>{
+let d=document.createElement("div"); d.className="card";
+d.innerHTML=`<h3>${i+1}. ${x.q}</h3>`;
+x.o.forEach((op,j)=>{
+d.innerHTML+=`<label style="display:block;margin:8px 0"><input type="radio" name="s${i}" value="${j}"> ${String.fromCharCode(65+j)}) ${op}</label>`;
+});
+box.appendChild(d);
+});
+}
+function grade(){
+let score=0, answered=0;
+simData.forEach((x,i)=>{
+let chosen=document.querySelector(`input[name=s${i}]:checked`);
+if(chosen){answered++;if(Number(chosen.value)===x.a)score++}
+});
+let pct=Math.round(score/simData.length*100);
+let r=document.getElementById("result");
+r.style.display="block";
+r.innerHTML=`<b>Resultado: ${score}/${simData.length} (${pct}%).</b><br>Respondidas: ${answered}/${simData.length}. ${pct>=80?"Repaso sólido. Ahora intenta justificar cada procedimiento, no solo recordar la fórmula.":pct>=60?"Vas avanzando. Revisa especialmente las fórmulas y la diferencia entre área y perímetro.":"Conviene volver a los conceptos fundamentales y practicar primero con figuras básicas antes de pasar a las irregulares."}`;
+document.getElementById("bar").style.width=pct+"%";
+}
+renderPractice(); renderSim();
+</script>
+</body>
+</html>
